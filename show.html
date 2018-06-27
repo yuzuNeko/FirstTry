@@ -1,0 +1,40 @@
+{% verbatim %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="/static/vue.js"></script>
+</head>
+<body>
+
+<!-- <img src="/static/data_img/1A0001_2018-06-25.png"> -->
+
+<div id="app1">
+	<ul>
+		<li v-for='img in data' style="list-style-type: none;">
+			{{img.slice(-14,-4)}}
+			<img v-bind:src="'/static/data_img/'+img">
+			<!-- 这个粒子很好的展示了vue的拼接，属性等于引号，里面的再有引号是常量字符串，没有就是当前vue的变量 -->
+			<!-- 而且一定要bind，否则无法使用vue里的变量 -->
+		</li>
+	</ul>
+</div>
+
+
+<script type="text/javascript">
+{% endverbatim %}
+var data={{ filelist | safe }}
+{% verbatim %}
+var app1=new Vue({
+	'el':'#app1',
+	'data':{
+		data:data,
+	}
+
+
+	//end
+})
+</script>
+</body>
+</html>
+{% endverbatim %}
