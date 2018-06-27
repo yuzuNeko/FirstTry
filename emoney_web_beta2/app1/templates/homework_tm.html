@@ -1,0 +1,49 @@
+{% verbatim  %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="/static/vue.js"></script>
+</head>
+<body>
+<div>
+	<img src="/static/img/maxpng.png" >
+	<img src="/static/img/meanpng.png">
+</div>
+
+<div id="app1">
+	显示条数:<input type="text" v-model="pick">
+	<p>当前页显示{{pick}}条数据来源</p>
+	<ul >
+		<li v-for="i in parseInt(pick)">
+		<span>{{info[i].house_info}}</span>&nbsp;&nbsp;&nbsp;
+		<span>{{info[i].house_type}}</span>&nbsp;&nbsp;&nbsp;
+		<span>{{info[i].village}}</span>&nbsp;&nbsp;&nbsp;
+		<div style="margin-right: 0px">{{info[i].month_price}}元/月</div>
+		</li>
+	</ul>
+</div>
+
+
+
+
+
+
+{% endverbatim  %}
+<script type="text/javascript">
+		var data={{data|safe}};
+</script>
+{% verbatim  %}
+<script type="text/javascript">
+	var app1=new Vue({
+		el:'#app1',
+		data:{
+			info:data,
+			pick:25,
+		}
+	})
+</script>
+</body>
+</html>
+{% endverbatim  %}

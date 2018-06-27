@@ -1,0 +1,153 @@
+
+{% verbatim  %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	
+	
+	<script src="/static/vue.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<style type="text/css">
+		.ac{
+			background-color: red
+		}
+		.bc{
+			font-size: 30px;
+		}
+		.parent{
+			width:600px
+		}
+
+		div {
+			background: #eeb3b3 none repeat scroll 0 0;
+		}
+
+		.block {
+			background: #ffd800 none repeat scroll 0 0;
+			display: block;
+			margin-left: auto;
+			margin-right: 100px;
+			padding: 50px;
+			width: 100px;
+			font-size: 5px;
+		}
+	</style>
+</head>
+<body>
+
+
+	<div id="app1" v-if='ift' >
+		<div v-if='ift' v-bind:class='{ac:isac,bc:isbc}'>
+			{{msg}}
+			<el-button @click="visible">Button</el-button>
+
+		</div>
+		<div>
+			<el-button v-if='is_el' v-on:click='acfalse'>ac<el-button>
+
+			</div>
+			<div >
+				<el-button v-if='is_el' v-on:click='bcfalse'>bc<el-button>
+				</div>
+				<com-a v-bind:msg='msg'></com-a>
+				<com-b v-on:child_change='msg="child vue"'></com-b>
+		
+	</div>
+			<div class="parent"> 
+				<span class="block">块级元素</span> 
+		</div>
+
+
+
+<div id="app2">
+	<com-a v-bind:msg='msg'></com-a>
+</div>
+<template id="atem1">
+	<button>click click</button>
+</template>
+{% endverbatim  %}
+	<script type="text/javascript">
+		var data={{data|safe}};
+	</script>
+	{% verbatim  %}
+<script type="text/javascript">
+	var app1=new Vue({
+		el:'#app1',
+		data:{
+			msg:'hello,vue',
+			ift:true,
+			isac:true,
+			isbc:true,
+			is_el:false,
+		},
+		methods:{
+			visible:function(){
+				this.msg='hello,el!';
+				this.is_el=true;
+			},
+			acfalse:function(){
+				this.isac=false
+			},
+			bcfalse:function(){
+				this.isbc=false
+			},
+			gg:function(){
+				this.ift=false;
+			},
+		},
+		components:{
+			'com-a':{
+				template:'<button @click="fnc">click me{{like}}</button>',
+				data:function(){
+					return{ like:10,liked:false,}
+				},
+				props:['msg'],
+				methods:{
+					fnc:function(){
+						console.log(this.msg)
+						if(!this.liked) this.like++;else this.like--;
+						this.liked=!this.liked
+					}
+
+				},
+			},
+			'com-b':{
+				template:'<button @click.prevent="change">change parent</button>',
+				methods:{
+					change:function(){
+						console.log('in?')
+						this.$emit('child_change')
+					}
+				},
+			
+			},
+		}
+	})
+	var app2=new Vue({
+		el:'#app2',
+		data:{
+			msg:data.msg1,
+		},
+		methods:{},
+		components:{
+			'com-a':{
+				data:function(){
+					return {msg1:'我是以'}
+				},
+				props:['msg'],
+				template:'<div><p>{{msg1}}</p><button @click="show">click me</button></div>',
+				methods:{
+					show:function(){
+						this.msg1=this.msg
+					}
+				}
+			},
+		}
+	})
+</script>
+</body>
+</html>
+
+{% endverbatim  %}

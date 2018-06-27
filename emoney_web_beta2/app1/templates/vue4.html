@@ -1,0 +1,84 @@
+{% verbatim  %}
+<!-- 注意这个注释，在使用django的时候要记得加上，否则很要可能出现不报错但是渲染不出来的现象 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id="app1">
+  <img v-bind:src="msg">
+  <br>
+  <img-1 des='/static/stock/mdjt.jpg' iname='美的集团'>美的集团</img-1>
+  <img-1 des='/static/stock/lns.jpg' iname='美的集团'></img-1>
+  <img-1 des='/static/stock/bys.jpg' iname='美的集团'>白云山</img-1>
+  <img-1 des='/static/stock/bgbc.jpg' iname='美的集团'>本钢板材</img-1>
+  <img-1 des='/static/stock/ccyd.jpg' iname='美的集团'>长春一东</img-1>
+  <img-1 des='/static/stock/smgf.jpg' iname='美的集团'>世茂股份</img-1>
+  <com-1></com-1>
+  <com-1></com-1>
+  <com-1></com-1>
+
+</div>
+
+<template id="tem3">
+<form action="/app1/page1/" method="post" >
+{% endverbatim  %}
+  {% csrf_token %}
+{% verbatim  %}
+  <input type="text" >
+  <input type="submit" name="submit">
+  
+</form>
+</template>
+
+<template id="tem1">
+    <!--图表内容区域，必须给 ECharts 容器本身指定高度。不然它会使用默认高度-->
+    <div class = "chart">
+      <div id = "echarts" style = "height: 17.5rem"></div>
+    </div>
+</template>
+<template id="tem2">
+  <div style="display: inline-block;">
+  <span>
+    <img v-bind:src="des" height="150px" width="200px" v-on:click='change'>
+    <p>{{iname}}</p>
+  </span>
+  </div>
+</template>
+<script src="/static/vue.js"></script>
+<script src="/static/echarts.min.js"></script>
+<script type="text/javascript">
+var app1=new Vue({
+  el:'#app1',
+  data:{
+    msg:"/static/stock/lns.jpg"
+  },
+  components:{
+    'img-1':{
+      template:'#tem2',
+      data:function(){
+        return { }
+      },
+      methods:{
+        change:function(){
+          this.$root.msg=this.des;
+        },
+      },
+      props:['des','iname'],
+      //end
+    },
+    //one component
+    'com-1':{
+      template:'#tem3',
+      //end
+    },
+    //one com
+  },
+  //end
+})
+
+</script>
+</body>
+</html>
+{% endverbatim  %}

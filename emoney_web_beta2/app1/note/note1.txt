@@ -1,0 +1,9 @@
+使用echarts的几个要点
+导入js,注意一个对象echarts，似乎是全局，可以先赋值到Vue的全局$cha里面去
+$echarts是一个可以自己制定的对象，似乎是类属性，由vue实例化出来的组件都会拥有
+byid似乎是唯一方法，不知道classname能不能得到，目前尝试是不能
+使用echart 进行init，之后两个重要对象，数据对象options 调用对象setoption使用options
+
+组件方面,可以使用mixins和props，绑定模板的id实现组件的复用。
+init要写在mounted里面，明天实现一次后端传参，图表复用并且展现不同的数据。
+希望能早日下好k线图的几个js包

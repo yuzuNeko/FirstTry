@@ -1,0 +1,53 @@
+{% verbatim  %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>welcome!</title>
+	<script type="text/javascript" src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.js"></script>
+	<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+
+<div id="app1">
+	<com-1 name='ok'></com-1>
+	<com-1 name='ok2'></com-1>
+</div>
+<template id="tem1">
+	<div v-bind:id="name" style="width: 600px;height:400px;"></div>
+</template>
+
+<script type="text/javascript">
+
+	Vue.prototype.$echa=echarts
+	var mixin1={
+		template:'#tem1',
+		mounted:function(){
+			this.$echa.init(document.getElementById(this.name)).setOption({
+            series: {
+                type: 'pie',
+                data: [
+                    {name: 'A', value: 1212},
+                    {name: 'B', value: 2323},
+                    {name: 'C', value: 1919}
+                ]
+            }
+        });
+		},
+		//end
+	}
+
+	var app1=new Vue({
+		el:'#app1',
+		components:{
+			'com-1':{
+				mixins:[mixin1],
+				props:['name'],
+				//end
+			}
+		}
+	})
+</script>
+</body>
+</html>
+{% endverbatim  %}
